@@ -559,7 +559,11 @@
                 statusDiv.textContent = `Error: ${error.message}`;
             }
         };
-
+        
+        // Load the "home" section by default when the page loads
+        window.onload = () => {
+            showSection('home');
+        };
     </script>
 </body>
 
