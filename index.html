@@ -13,14 +13,21 @@
     <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Font Awesome for hamburger icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 
 <body>
     <header>
         <nav class="navbar">
             <div class="container">
-                <ul class="nav-links">
-                    <li><a href="#" onclick="showSection('home')">InBrowser PDF</a></li>
+                <div class="nav-header">
+                    <a href="#" onclick="showSection('home')" class="navbar-brand">InBrowser PDF</a>
+                    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+                <ul class="nav-links" id="nav-links">
                     <li><a href="javascript:void(0);" onclick="showSection('invert-pdf')">Invert Colors</a></li>
                     <li><a href="javascript:void(0);" onclick="showSection('merge-pdf')">Merge PDFs</a></li>
                     <li><a href="javascript:void(0);" onclick="showSection('split-pdf')">Split PDFs</a></li>
@@ -132,11 +139,27 @@
 
                 // Append the new section to the main element
                 document.querySelector('main').appendChild(newSection);
+                
+                // On mobile, close the menu after selection
+                if (window.innerWidth <= 768) {
+                    document.getElementById('nav-links').classList.remove('show');
+                }
             } else {
                 // If the section is already loaded, just display it
                 activeSection.style.display = 'block';
+                
+                // On mobile, close the menu after selection
+                if (window.innerWidth <= 768) {
+                    document.getElementById('nav-links').classList.remove('show');
+                }
             }
         };
+
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('show');
+        }
 
         // Function to clear previews and status
         function clearPreviews() {
@@ -389,6 +412,54 @@
         };
 
         // Function to rotate PDFs
+        const handleRotate = async () => {
+            const upload = document.getElementById('upload');
+            const statusDiv = document.getElementById('status');
+            const previewsDiv = document.getElementById('previews');
+
+            const files = Array.from(upload.files);
+            if (!files || files.length === 0) {
+                statusDiv.textContent = "Please select at least one PDF file to rotate.";
+                return;
+            }
+
+            try {
+                const { PDFDocument } = PDFLib;
+                previewsDiv.innerHTML = '';
+                statusDiv.innerHTML = `Rotating <b>${files.length}</b> file(s)...`;
+
+                for (const file of files) {
+                    const fileName = file.name.replace(/\.pdf$/i, '');
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdfDoc = await PDFDocument.load(arrayBuffer);
+                    const pages = pdfDoc.getPages();
+
+                    // Rotate each page by 90 degrees clockwise
+                    pages.forEach(page => {
+                        page.setRotation({
+                            angle: (page.getRotation().angle + 90) % 360,
+                        });
+                    });
+
+                    const rotatedPdfBytes = await pdfDoc.save();
+                    const blob = new Blob([rotatedPdfBytes], { type: 'application/pdf' });
+                    const url = URL.createObjectURL(blob);
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = url;
+                    downloadLink.download = `${fileName}_rotated.pdf`;
+                    downloadLink.textContent = `Download ${fileName}_rotated.pdf`;
+                    downloadLink.style.display = 'block';
+                    downloadLink.style.marginTop = '1em';
+
+                    previewsDiv.appendChild(downloadLink);
+                }
+
+                statusDiv.innerHTML = `<strong>PDFs rotated successfully!</strong>`;
+            } catch (error) {
+                console.error("Rotation Error:", error);
+                statusDiv.textContent = `Error: ${error.message}`;
+            }
+        };
 
         // Function to Watermark PDFs
         const watermarkPDF = async () => {
@@ -483,6 +554,12 @@
         // Load the "home" section by default when the page loads
         window.onload = () => {
             showSection('home');
+            
+            // Set up mobile menu toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            if (menuToggle) {
+                menuToggle.addEventListener('click', toggleMobileMenu);
+            }
         };
     </script>
 </body>

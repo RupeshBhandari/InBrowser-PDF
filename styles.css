@@ -5,6 +5,12 @@ body {
     color: #eee;
     text-align: center;
     padding: 20px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
 }
 
 input,
@@ -16,6 +22,7 @@ button {
     color: #eee;
     border: 1px solid #555;
     border-radius: 5px;
+    max-width: 100%;
 }
 
 button:hover {
@@ -40,9 +47,7 @@ canvas {
     position: sticky;
     top: 0;
     z-index: 999;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    width: 100%;
 }
 
 .navbar .navbar-brand {
@@ -51,12 +56,21 @@ canvas {
     text-decoration: none;
 }
 
+.nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
 .navbar .nav-links {
     list-style: none;
     display: flex;
+    flex-wrap: wrap;
     gap: 15px;
     margin: 0;
     padding: 0;
+    justify-content: center;
 }
 
 .navbar .nav-links li a {
@@ -65,6 +79,7 @@ canvas {
     padding: 5px 10px;
     border-radius: 4px;
     transition: background 0.3s, color 0.3s;
+    display: block;
 }
 
 .navbar .nav-links li a:hover {
@@ -75,5 +90,95 @@ canvas {
 .container {
     max-width: 960px;
     margin: auto;
-    text-align: left;
+    width: 100%;
+    padding: 0 15px;
+}
+
+/* Mobile menu button (hidden by default) */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+main {
+    padding: 20px 0;
+}
+
+section {
+    padding: 10px;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .navbar {
+        padding: 10px;
+    }
+    
+    .navbar .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    .navbar .nav-links {
+        flex-direction: column;
+        width: 100%;
+        gap: 5px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+    }
+    
+    .navbar .nav-links.show {
+        max-height: 500px;
+    }
+    
+    .navbar .nav-links li {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .navbar .nav-links li a {
+        padding: 8px 0;
+        display: block;
+        width: 100%;
+    }
+    
+    input, button {
+        width: 90%;
+        margin: 8px auto;
+        padding: 12px;
+        font-size: 16px;
+        display: block;
+    }
+    
+    /* Make inputs more touch-friendly on mobile */
+    input[type="file"] {
+        font-size: 14px;
+    }
+    
+    h1 {
+        font-size: 24px;
+    }
+    
+    .pdf-preview {
+        padding: 0;
+    }
+    
+    canvas {
+        max-width: 100%;
+    }
 }
