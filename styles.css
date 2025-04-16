@@ -31,7 +31,38 @@ button:hover {
 }
 
 .pdf-preview {
-    margin-top: 30px;
+    margin: 30px auto;
+    padding: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+}
+
+.pdf-preview h3 {
+    margin-bottom: 15px;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.pdf-preview a {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 8px 15px;
+    background: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+.pdf-preview a:hover {
+    background: #444;
 }
 
 canvas {
@@ -54,6 +85,8 @@ canvas {
     font-size: 1.5rem;
     color: #fff;
     text-decoration: none;
+    white-space: nowrap;
+    margin-right: 15px;
 }
 
 .nav-header {
@@ -61,6 +94,7 @@ canvas {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin-bottom: 15px;
 }
 
 .navbar .nav-links {
@@ -71,6 +105,7 @@ canvas {
     margin: 0;
     padding: 0;
     justify-content: center;
+    width: 100%;
 }
 
 .navbar .nav-links li a {
@@ -92,6 +127,9 @@ canvas {
     margin: auto;
     width: 100%;
     padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Mobile menu button (hidden by default) */
@@ -103,14 +141,30 @@ canvas {
     font-size: 24px;
     cursor: pointer;
     padding: 5px;
+    margin-left: 10px;
 }
 
 main {
     padding: 20px 0;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 15px;
 }
 
 section {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#status {
+    margin: 15px 0;
     padding: 10px;
+    width: 100%;
+    max-width: 800px;
+    word-wrap: break-word;
 }
 
 /* Responsive styles */
@@ -129,6 +183,10 @@ section {
         align-items: center;
     }
     
+    .nav-header {
+        margin-bottom: 0;
+    }
+    
     .menu-toggle {
         display: block;
     }
@@ -144,6 +202,7 @@ section {
     
     .navbar .nav-links.show {
         max-height: 500px;
+        margin-top: 15px;
     }
     
     .navbar .nav-links li {
@@ -175,10 +234,19 @@ section {
     }
     
     .pdf-preview {
-        padding: 0;
+        padding: 10px 0;
+        margin: 20px 0;
+        width: 100%;
     }
     
     canvas {
         max-width: 100%;
+    }
+    
+    #previews {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }

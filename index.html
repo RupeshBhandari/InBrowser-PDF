@@ -43,35 +43,37 @@
         <!-- Initial empty space for dynamically loaded sections -->
     </main>
 
-    <script>
-        // Dynamically load sections based on user interaction  
-        function showSection(sectionId) {
-            // Hide all sections
-            const sections = document.querySelectorAll('main section');
-            sections.forEach((section) => {
-                section.style.display = 'none';
-            });
 
-            // Check if the section already exists
-            const activeSection = document.getElementById(sectionId);
-            if (!activeSection) {
-                // Create and load the content dynamically
-                const newSection = document.createElement('section');
-                newSection.id = sectionId;
-                newSection.style.display = 'block';
+</body>
+<script>
+    // Dynamically load sections based on user interaction
+    function showSection(sectionId) {
+        // Hide all sections
+        const sections = document.querySelectorAll("main section");
+        sections.forEach((section) => {
+            section.style.display = "none";
+        });
 
-                let sectionContent = '';
+        // Check if the section already exists
+        const activeSection = document.getElementById(sectionId);
+        if (!activeSection) {
+            // Create and load the content dynamically
+            const newSection = document.createElement("section");
+            newSection.id = sectionId;
+            newSection.style.display = "block";
 
-                // Define section content based on the section type
-                switch (sectionId) {
-                    case 'home':
-                        sectionContent = `
+            let sectionContent = "";
+
+            // Define section content based on the section type
+            switch (sectionId) {
+                case "home":
+                    sectionContent = `
                     <h1>Welcome to InBrowser PDF</h1>
                     <p>Choose a tool from the navigation menu to start working with PDFs.</p>
                 `;
-                        break;
-                    case 'invert-pdf':
-                        sectionContent = `
+                    break;
+                case "invert-pdf":
+                    sectionContent = `
                     <h1>Invert Colors</h1>
                     <input type="file" id="upload" accept="application/pdf" multiple>
                     <button id="process" onclick="invertColors()">Run</button>
@@ -79,9 +81,9 @@
                     <div id="status"></div>
                     <div id="previews" class="pdf-preview"></div>
                 `;
-                        break;
-                    case 'merge-pdf':
-                        sectionContent = `
+                    break;
+                case "merge-pdf":
+                    sectionContent = `
                     <h1>Merge PDFs</h1>
                     <input type="file" id="upload" accept="application/pdf" multiple>
                     <button id="process" onclick="handleMerge()">Run</button>
@@ -89,9 +91,9 @@
                     <div id="status"></div>
                     <div id="previews" class="pdf-preview"></div>
                 `;
-                        break;
-                    case 'split-pdf':
-                        sectionContent = `
+                    break;
+                case "split-pdf":
+                    sectionContent = `
                     <h1>Split PDFs</h1>
                     <input type="file" id="upload" accept="application/pdf" multiple>
                     <button id="process" onclick="splitPdf()">Run</button>
@@ -99,9 +101,9 @@
                     <div id="status"></div>
                     <div id="previews" class="pdf-preview"></div>
                 `;
-                        break;
-                    case 'compress-pdf':
-                        sectionContent = `
+                    break;
+                case "compress-pdf":
+                    sectionContent = `
                     <h1>Compress PDFs</h1>
                     <input type="file" id="upload" accept="application/pdf" multiple>
                     <button id="process" onclick="handleCompress()">Run</button>
@@ -109,9 +111,9 @@
                     <div id="status"></div>
                     <div id="previews" class="pdf-preview"></div>
                 `;
-                        break;
-                    case 'rotate-pdf':
-                        sectionContent = `
+                    break;
+                case "rotate-pdf":
+                    sectionContent = `
                     <h1>Rotate PDFs</h1>
                     <input type="file" id="upload" accept="application/pdf" multiple>
                     <button id="process" onclick="handleRotate()">Run</button>
@@ -119,9 +121,9 @@
                     <div id="status"></div>
                     <div id="previews" class="pdf-preview"></div>
                 `;
-                        break;
-                    case 'watermark-pdf':
-                        sectionContent = `
+                    break;
+                case "watermark-pdf":
+                    sectionContent = `
                     <h1>Add Watermark</h1>
                     <input type="file" id="upload" accept="application/pdf" multiple>
                     <label for="watermarkText">Watermark Text:</label>
@@ -131,437 +133,449 @@
                     <div id="status"></div>
                     <div id="previews" class="pdf-preview"></div>
                 `;
-                        break;
-                }
-
-                // Set the content to the new section
-                newSection.innerHTML = sectionContent;
-
-                // Append the new section to the main element
-                document.querySelector('main').appendChild(newSection);
-                
-                // On mobile, close the menu after selection
-                if (window.innerWidth <= 768) {
-                    document.getElementById('nav-links').classList.remove('show');
-                }
-            } else {
-                // If the section is already loaded, just display it
-                activeSection.style.display = 'block';
-                
-                // On mobile, close the menu after selection
-                if (window.innerWidth <= 768) {
-                    document.getElementById('nav-links').classList.remove('show');
-                }
+                    break;
             }
-        };
 
-        // Toggle mobile menu
-        function toggleMobileMenu() {
-            const navLinks = document.getElementById('nav-links');
-            navLinks.classList.toggle('show');
+            // Set the content to the new section
+            newSection.innerHTML = sectionContent;
+
+            // Append the new section to the main element
+            document.querySelector("main").appendChild(newSection);
+
+            // On mobile, close the menu after selection
+            if (window.innerWidth <= 768) {
+                document.getElementById("nav-links").classList.remove("show");
+            }
+        } else {
+            // If the section is already loaded, just display it
+            activeSection.style.display = "block";
+
+            // On mobile, close the menu after selection
+            if (window.innerWidth <= 768) {
+                document.getElementById("nav-links").classList.remove("show");
+            }
+        }
+    }
+
+    // Toggle mobile menu
+    function toggleMobileMenu() {
+        const navLinks = document.getElementById("nav-links");
+        navLinks.classList.toggle("show");
+    }
+
+    // Function to clear previews and status
+    function clearPreviews() {
+        const previewsDiv = document.getElementById("previews");
+        const statusDiv = document.getElementById("status");
+        const upload = document.getElementById("upload");
+
+        // Clear the file input
+        if (upload) upload.value = "";
+
+        // Clear previews and status
+        if (previewsDiv) previewsDiv.innerHTML = "";
+        if (statusDiv) statusDiv.textContent = "";
+
+        console.log("Preview and status cleared.");
+    }
+
+    // Function to invert colors in PDF
+    const invertColors = async () => {
+        const upload = document.getElementById("upload");
+        const statusDiv = document.getElementById("status");
+        const previewsDiv = document.getElementById("previews");
+
+        if (!upload || !upload.files) {
+            alert("Upload field not found. Please reload the tool.");
+            return;
         }
 
-        // Function to clear previews and status
-        function clearPreviews() {
-            const previewsDiv = document.getElementById('previews');
-            const statusDiv = document.getElementById('status');
-            const upload = document.getElementById('upload');
+        const files = Array.from(upload.files);
+        if (files.length === 0) {
+            statusDiv.textContent = "Please select a PDF file to invert.";
+            return;
+        }
 
-            // Clear the file input
-            if (upload) upload.value = '';
-
-            // Clear previews and status
-            if (previewsDiv) previewsDiv.innerHTML = '';
-            if (statusDiv) statusDiv.textContent = '';
-
-            console.log('Preview and status cleared.');
-        };
-        
-        // Function to invert colors in PDF
-        const invertColors = async () => {
-
-            const upload = document.getElementById('upload');
-            const statusDiv = document.getElementById('status');
-            const previewsDiv = document.getElementById('previews');
-
-            if (!upload || !upload.files) {
-                alert("Upload field not found. Please reload the tool.");
-                return;
+        try {
+            const { jsPDF } = window.jspdf || {};
+            if (!jsPDF) {
+                throw new Error(
+                    "Failed to load jsPDF. Please ensure the library is included correctly."
+                );
             }
 
-            const files = Array.from(upload.files);
-            if (files.length === 0) {
-                statusDiv.textContent = "Please select a PDF file to invert.";
-                return;
-            }
+            previewsDiv.innerHTML = "";
 
-            try {
-                const { jsPDF } = window.jspdf || {};
-                if (!jsPDF) {
-                    throw new Error("Failed to load jsPDF. Please ensure the library is included correctly.");
+            for (const file of files) {
+                const fileName = file.name.replace(/\.pdf$/i, "");
+                statusDiv.innerHTML = `Processing <b>${file.name}</b>...`;
+
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                const canvases = [];
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({ scale: 2 });
+                    const canvas = document.createElement("canvas");
+                    const context = canvas.getContext("2d");
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+
+                    await page.render({ canvasContext: context, viewport }).promise;
+
+                    const imageData = context.getImageData(
+                        0,
+                        0,
+                        canvas.width,
+                        canvas.height
+                    );
+                    const data = imageData.data;
+                    for (let j = 0; j < data.length; j += 4) {
+                        data[j] = 255 - data[j];
+                        data[j + 1] = 255 - data[j + 1];
+                        data[j + 2] = 255 - data[j + 2];
+                    }
+                    context.putImageData(imageData, 0, 0);
+                    canvases.push(canvas);
                 }
 
-                previewsDiv.innerHTML = '';
+                const pdfDoc = new jsPDF();
+                canvases.forEach((canvas, index) => {
+                    const imgData = canvas.toDataURL("image/png");
+                    const imgProps = pdfDoc.getImageProperties(imgData);
+                    const pdfWidth = pdfDoc.internal.pageSize.getWidth();
+                    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-                for (const file of files) {
-                    const fileName = file.name.replace(/\.pdf$/i, '');
-                    statusDiv.innerHTML = `Processing <b>${file.name}</b>...`;
+                    if (index !== 0) pdfDoc.addPage();
+                    pdfDoc.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+                });
 
-                    const arrayBuffer = await file.arrayBuffer();
-                    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                    const canvases = [];
+                const outputBlob = pdfDoc.output("blob");
+                const url = URL.createObjectURL(outputBlob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = `${fileName}_inverted.pdf`;
+                link.textContent = `Download ${fileName}_inverted.pdf`;
+                link.style.display = "block";
+                link.style.margin = "10px auto";
 
-                    for (let i = 1; i <= pdf.numPages; i++) {
-                        const page = await pdf.getPage(i);
-                        const viewport = page.getViewport({ scale: 2 });
-                        const canvas = document.createElement('canvas');
-                        const context = canvas.getContext('2d');
-                        canvas.width = viewport.width;
-                        canvas.height = viewport.height;
+                const container = document.createElement("div");
+                container.className = "pdf-preview";
+                container.innerHTML = `<h3>${file.name}</h3>`;
+                container.appendChild(link);
+                previewsDiv.appendChild(container);
+            }
 
-                        await page.render({ canvasContext: context, viewport }).promise;
+            statusDiv.innerHTML = `<strong>All files processed!</strong>`;
+        } catch (error) {
+            console.error(error.message);
+            statusDiv.textContent = `Error: ${error.message}`;
+        }
+    };
+    // Function to merge PDFs
+    const handleMerge = async () => {
+        const upload = document.getElementById("upload");
+        const statusDiv = document.getElementById("status");
+        const previewsDiv = document.getElementById("previews");
 
-                        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                        const data = imageData.data;
-                        for (let j = 0; j < data.length; j += 4) {
-                            data[j] = 255 - data[j];
-                            data[j + 1] = 255 - data[j + 1];
-                            data[j + 2] = 255 - data[j + 2];
-                        }
-                        context.putImageData(imageData, 0, 0);
-                        canvases.push(canvas);
-                    }
+        const files = Array.from(upload.files);
+        if (!files || files.length === 0) {
+            statusDiv.textContent = "Please select at least one PDF file to merge.";
+            return;
+        }
 
-                    const pdfDoc = new jsPDF();
-                    canvases.forEach((canvas, index) => {
-                        const imgData = canvas.toDataURL('image/png');
-                        const imgProps = pdfDoc.getImageProperties(imgData);
-                        const pdfWidth = pdfDoc.internal.pageSize.getWidth();
-                        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        try {
+            const { PDFDocument } = PDFLib;
+            previewsDiv.innerHTML = "";
+            statusDiv.innerHTML = `Merging <b>${files.length}</b> file(s)...`;
 
-                        if (index !== 0) pdfDoc.addPage();
-                        pdfDoc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                    });
+            const mergedPdf = await PDFDocument.create();
 
-                    const outputBlob = pdfDoc.output('blob');
-                    const url = URL.createObjectURL(outputBlob);
-                    const link = document.createElement('a');
+            for (const file of files) {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await PDFDocument.load(arrayBuffer);
+                const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                copiedPages.forEach((page) => mergedPdf.addPage(page));
+
+                // Show file in preview
+                const item = document.createElement("div");
+                item.innerHTML = `📄 ${file.name}`;
+                previewsDiv.appendChild(item);
+            }
+
+            const mergedPdfBytes = await mergedPdf.save();
+
+            const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
+            const url = URL.createObjectURL(blob);
+            const downloadLink = document.createElement("a");
+            downloadLink.href = url;
+            downloadLink.download = "merged_output.pdf";
+            downloadLink.textContent = "Download merged_output.pdf";
+            downloadLink.style.display = "block";
+            downloadLink.style.marginTop = "1em";
+
+            previewsDiv.appendChild(downloadLink);
+            statusDiv.innerHTML = `<strong>PDFs merged successfully!</strong>`;
+        } catch (error) {
+            console.error("Merge Error:", error);
+            statusDiv.textContent = `Error: ${error.message}`;
+        }
+    };
+
+    // Function to split PDFs
+    const splitPdf = async () => {
+        const upload = document.getElementById("upload");
+        const process = document.getElementById("process");
+        const statusDiv = document.getElementById("status");
+        const previewsDiv = document.getElementById("previews");
+        const files = Array.from(upload.files);
+        if (!files || files.length === 0) {
+            statusDiv.textContent = "Please select a PDF to split.";
+            return;
+        }
+
+        try {
+            const { PDFDocument } = PDFLib;
+            previewsDiv.innerHTML = ""; // Clear previous output
+
+            for (const file of files) {
+                const fileName = file.name.replace(/\.pdf$/i, "");
+                statusDiv.innerHTML = `Splitting <b>${file.name}</b>...`;
+
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await PDFDocument.load(arrayBuffer);
+
+                for (let i = 0; i < pdf.getPageCount(); i++) {
+                    const newPdf = await PDFDocument.create();
+                    const [copiedPage] = await newPdf.copyPages(pdf, [i]);
+                    newPdf.addPage(copiedPage);
+
+                    const pdfBytes = await newPdf.save();
+                    const blob = new Blob([pdfBytes], { type: "application/pdf" });
+                    const url = URL.createObjectURL(blob);
+
+                    const link = document.createElement("a");
                     link.href = url;
-                    link.download = `${fileName}_inverted.pdf`;
-                    link.textContent = `Download ${fileName}_inverted.pdf`;
-                    link.style.display = 'block';
-                    link.style.margin = '10px auto';
+                    link.download = `${fileName}_page${i + 1}.pdf`;
+                    link.textContent = `Download ${fileName} - Page ${i + 1}`;
+                    link.style.display = "block";
 
-                    const container = document.createElement('div');
-                    container.className = 'pdf-preview';
-                    container.innerHTML = `<h3>${file.name}</h3>`;
+                    const container = document.createElement("div");
+                    container.className = "pdf-preview";
                     container.appendChild(link);
                     previewsDiv.appendChild(container);
                 }
-
-                statusDiv.innerHTML = `<strong>All files processed!</strong>`;
-            } catch (error) {
-                console.error(error.message);
-                statusDiv.textContent = `Error: ${error.message}`;
-            }
-        };
-        // Function to merge PDFs
-        const handleMerge = async () => {
-            const upload = document.getElementById('upload');
-            const statusDiv = document.getElementById('status');
-            const previewsDiv = document.getElementById('previews');
-
-            const files = Array.from(upload.files);
-            if (!files || files.length === 0) {
-                statusDiv.textContent = "Please select at least one PDF file to merge.";
-                return;
             }
 
-            try {
-                const { PDFDocument } = PDFLib;
-                previewsDiv.innerHTML = '';
-                statusDiv.innerHTML = `Merging <b>${files.length}</b> file(s)...`;
+            statusDiv.innerHTML = `<strong>All files split successfully!</strong>`;
+        } catch (err) {
+            console.error(err);
+            statusDiv.textContent = `Error: ${err.message}`;
+        }
+    };
 
-                const mergedPdf = await PDFDocument.create();
+    // Function to compress PDFs
+    const handleCompress = async () => {
+        const upload = document.getElementById("upload");
+        const statusDiv = document.getElementById("status");
+        const previewsDiv = document.getElementById("previews");
 
-                for (const file of files) {
-                    const arrayBuffer = await file.arrayBuffer();
-                    const pdf = await PDFDocument.load(arrayBuffer);
-                    const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-                    copiedPages.forEach((page) => mergedPdf.addPage(page));
+        const files = Array.from(upload.files);
+        if (!files || files.length === 0) {
+            statusDiv.textContent = "Please select at least one PDF file to compress.";
+            return;
+        }
 
-                    // Show file in preview
-                    const item = document.createElement('div');
-                    item.innerHTML = `📄 ${file.name}`;
-                    previewsDiv.appendChild(item);
-                }
+        try {
+            const { PDFDocument } = PDFLib;
+            previewsDiv.innerHTML = "";
+            statusDiv.innerHTML = `Compressing <b>${files.length}</b> file(s)...`;
 
-                const mergedPdfBytes = await mergedPdf.save();
+            for (const file of files) {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdfDoc = await PDFDocument.load(arrayBuffer);
 
-                const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
+                // Compress the PDF
+                pdfDoc.compress();
+
+                const compressedPdfBytes = await pdfDoc.save();
+                const blob = new Blob([compressedPdfBytes], { type: "application/pdf" });
                 const url = URL.createObjectURL(blob);
-                const downloadLink = document.createElement('a');
+                const downloadLink = document.createElement("a");
                 downloadLink.href = url;
-                downloadLink.download = 'merged_output.pdf';
-                downloadLink.textContent = 'Download merged_output.pdf';
-                downloadLink.style.display = 'block';
-                downloadLink.style.marginTop = '1em';
+                downloadLink.download = `${file.name.replace(
+                    /\.pdf$/i,
+                    ""
+                )}_compressed.pdf`;
+                downloadLink.textContent = `Download ${file.name.replace(
+                    /\.pdf$/i,
+                    ""
+                )}_compressed.pdf`;
+                downloadLink.style.display = "block";
+                downloadLink.style.marginTop = "1em";
 
                 previewsDiv.appendChild(downloadLink);
-                statusDiv.innerHTML = `<strong>PDFs merged successfully!</strong>`;
-            } catch (error) {
-                console.error("Merge Error:", error);
-                statusDiv.textContent = `Error: ${error.message}`;
-            }
-        };
-
-        // Function to split PDFs
-        const splitPdf = async () => {
-            const upload = document.getElementById('upload');
-            const process = document.getElementById('process');
-            const statusDiv = document.getElementById('status');
-            const previewsDiv = document.getElementById('previews');
-            const files = Array.from(upload.files);
-            if (!files || files.length === 0) {
-                statusDiv.textContent = "Please select a PDF to split.";
-                return;
             }
 
-            try {
-                const { PDFDocument } = PDFLib;
-                previewsDiv.innerHTML = ''; // Clear previous output
+            statusDiv.innerHTML = `<strong>PDFs compressed successfully!</strong>`;
+        } catch (error) {
+            console.error("Compression Error:", error);
+            statusDiv.textContent = `Error: ${error.message}`;
+        }
+    };
 
-                for (const file of files) {
-                    const fileName = file.name.replace(/\.pdf$/i, '');
-                    statusDiv.innerHTML = `Splitting <b>${file.name}</b>...`;
+    // Function to rotate PDFs
+    const handleRotate = async () => {
+        const upload = document.getElementById("upload");
+        const statusDiv = document.getElementById("status");
+        const previewsDiv = document.getElementById("previews");
 
-                    const arrayBuffer = await file.arrayBuffer();
-                    const pdf = await PDFDocument.load(arrayBuffer);
+        const files = Array.from(upload.files);
+        if (!files || files.length === 0) {
+            statusDiv.textContent = "Please select at least one PDF file to rotate.";
+            return;
+        }
 
-                    for (let i = 0; i < pdf.getPageCount(); i++) {
-                        const newPdf = await PDFDocument.create();
-                        const [copiedPage] = await newPdf.copyPages(pdf, [i]);
-                        newPdf.addPage(copiedPage);
+        try {
+            const { PDFDocument } = PDFLib;
+            previewsDiv.innerHTML = "";
+            statusDiv.innerHTML = `Rotating <b>${files.length}</b> file(s)...`;
 
-                        const pdfBytes = await newPdf.save();
-                        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-                        const url = URL.createObjectURL(blob);
+            for (const file of files) {
+                const fileName = file.name.replace(/\.pdf$/i, "");
+                const arrayBuffer = await file.arrayBuffer();
+                const pdfDoc = await PDFDocument.load(arrayBuffer);
+                const pages = pdfDoc.getPages();
 
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.download = `${fileName}_page${i + 1}.pdf`;
-                        link.textContent = `Download ${fileName} - Page ${i + 1}`;
-                        link.style.display = 'block';
-
-                        const container = document.createElement('div');
-                        container.className = 'pdf-preview';
-                        container.appendChild(link);
-                        previewsDiv.appendChild(container);
-                    }
-                }
-
-                statusDiv.innerHTML = `<strong>All files split successfully!</strong>`;
-            } catch (err) {
-                console.error(err);
-                statusDiv.textContent = `Error: ${err.message}`;
-            }
-        };
-
-        // Function to compress PDFs    
-        const handleCompress = async () => {
-            const upload = document.getElementById('upload');
-            const statusDiv = document.getElementById('status');
-            const previewsDiv = document.getElementById('previews');
-
-            const files = Array.from(upload.files);
-            if (!files || files.length === 0) {
-                statusDiv.textContent = "Please select at least one PDF file to compress.";
-                return;
-            }
-
-            try {
-                const { PDFDocument } = PDFLib;
-                previewsDiv.innerHTML = '';
-                statusDiv.innerHTML = `Compressing <b>${files.length}</b> file(s)...`;
-
-                for (const file of files) {
-                    const arrayBuffer = await file.arrayBuffer();
-                    const pdfDoc = await PDFDocument.load(arrayBuffer);
-
-                    // Compress the PDF
-                    pdfDoc.compress();
-
-                    const compressedPdfBytes = await pdfDoc.save();
-                    const blob = new Blob([compressedPdfBytes], { type: 'application/pdf' });
-                    const url = URL.createObjectURL(blob);
-                    const downloadLink = document.createElement('a');
-                    downloadLink.href = url;
-                    downloadLink.download = `${file.name.replace(/\.pdf$/i, '')}_compressed.pdf`;
-                    downloadLink.textContent = `Download ${file.name.replace(/\.pdf$/i, '')}_compressed.pdf`;
-                    downloadLink.style.display = 'block';
-                    downloadLink.style.marginTop = '1em';
-
-                    previewsDiv.appendChild(downloadLink);
-                }
-
-                statusDiv.innerHTML = `<strong>PDFs compressed successfully!</strong>`;
-            } catch (error) {
-                console.error("Compression Error:", error);
-                statusDiv.textContent = `Error: ${error.message}`;
-            }
-        };
-
-        // Function to rotate PDFs
-        const handleRotate = async () => {
-            const upload = document.getElementById('upload');
-            const statusDiv = document.getElementById('status');
-            const previewsDiv = document.getElementById('previews');
-
-            const files = Array.from(upload.files);
-            if (!files || files.length === 0) {
-                statusDiv.textContent = "Please select at least one PDF file to rotate.";
-                return;
-            }
-
-            try {
-                const { PDFDocument } = PDFLib;
-                previewsDiv.innerHTML = '';
-                statusDiv.innerHTML = `Rotating <b>${files.length}</b> file(s)...`;
-
-                for (const file of files) {
-                    const fileName = file.name.replace(/\.pdf$/i, '');
-                    const arrayBuffer = await file.arrayBuffer();
-                    const pdfDoc = await PDFDocument.load(arrayBuffer);
-                    const pages = pdfDoc.getPages();
-
-                    // Rotate each page by 90 degrees clockwise
-                    pages.forEach(page => {
-                        page.setRotation({
-                            angle: (page.getRotation().angle + 90) % 360,
-                        });
+                // Rotate each page by 90 degrees clockwise
+                pages.forEach((page) => {
+                    page.setRotation({
+                        angle: (page.getRotation().angle + 90) % 360,
                     });
+                });
 
-                    const rotatedPdfBytes = await pdfDoc.save();
-                    const blob = new Blob([rotatedPdfBytes], { type: 'application/pdf' });
-                    const url = URL.createObjectURL(blob);
-                    const downloadLink = document.createElement('a');
-                    downloadLink.href = url;
-                    downloadLink.download = `${fileName}_rotated.pdf`;
-                    downloadLink.textContent = `Download ${fileName}_rotated.pdf`;
-                    downloadLink.style.display = 'block';
-                    downloadLink.style.marginTop = '1em';
+                const rotatedPdfBytes = await pdfDoc.save();
+                const blob = new Blob([rotatedPdfBytes], { type: "application/pdf" });
+                const url = URL.createObjectURL(blob);
+                const downloadLink = document.createElement("a");
+                downloadLink.href = url;
+                downloadLink.download = `${fileName}_rotated.pdf`;
+                downloadLink.textContent = `Download ${fileName}_rotated.pdf`;
+                downloadLink.style.display = "block";
+                downloadLink.style.marginTop = "1em";
 
-                    previewsDiv.appendChild(downloadLink);
+                previewsDiv.appendChild(downloadLink);
+            }
+
+            statusDiv.innerHTML = `<strong>PDFs rotated successfully!</strong>`;
+        } catch (error) {
+            console.error("Rotation Error:", error);
+            statusDiv.textContent = `Error: ${error.message}`;
+        }
+    };
+
+    // Function to Watermark PDFs
+    const watermarkPDF = async () => {
+        const upload = document.getElementById("upload");
+        const watermarkInput = document.getElementById("watermarkText");
+        const statusDiv = document.getElementById("status");
+        const previewsDiv = document.getElementById("previews");
+
+        const files = Array.from(upload.files);
+        const watermarkText = watermarkInput.value.trim();
+
+        if (!files || files.length === 0) {
+            statusDiv.textContent = "Please select a PDF file to watermark.";
+            return;
+        }
+
+        if (!watermarkText) {
+            statusDiv.textContent = "Please enter watermark text.";
+            return;
+        }
+
+        try {
+            const { jsPDF } = window.jspdf || {};
+            if (!jsPDF) throw new Error("jsPDF not found. Check script import.");
+
+            previewsDiv.innerHTML = "";
+
+            for (const file of files) {
+                const fileName = file.name.replace(/\.pdf$/i, "");
+                statusDiv.innerHTML = `Processing <b>${file.name}</b>...`;
+
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                const canvases = [];
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const viewport = page.getViewport({ scale: 2 });
+                    const canvas = document.createElement("canvas");
+                    const context = canvas.getContext("2d");
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+
+                    await page.render({ canvasContext: context, viewport }).promise;
+
+                    // Add watermark text
+                    context.font = "48px sans-serif";
+                    context.fillStyle = "rgba(255, 0, 0, 0.25)";
+                    context.textAlign = "center";
+                    context.translate(canvas.width / 2, canvas.height / 2);
+                    context.rotate(-Math.PI / 4);
+                    context.fillText(watermarkText, 0, 0);
+
+                    canvases.push(canvas);
                 }
 
-                statusDiv.innerHTML = `<strong>PDFs rotated successfully!</strong>`;
-            } catch (error) {
-                console.error("Rotation Error:", error);
-                statusDiv.textContent = `Error: ${error.message}`;
+                const pdfDoc = new jsPDF();
+
+                canvases.forEach((canvas, index) => {
+                    const imgData = canvas.toDataURL("image/png");
+                    const imgProps = pdfDoc.getImageProperties(imgData);
+                    const pdfWidth = pdfDoc.internal.pageSize.getWidth();
+                    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+                    if (index !== 0) pdfDoc.addPage();
+                    pdfDoc.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+                });
+
+                const outputBlob = pdfDoc.output("blob");
+                const url = URL.createObjectURL(outputBlob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = `${fileName}_watermarked.pdf`;
+                link.textContent = `Download ${fileName}_watermarked.pdf`;
+                link.style.display = "block";
+                link.style.margin = "10px auto";
+
+                const container = document.createElement("div");
+                container.className = "pdf-preview";
+                container.innerHTML = `<h3>${file.name}</h3>`;
+                container.appendChild(link);
+                previewsDiv.appendChild(container);
             }
-        };
 
-        // Function to Watermark PDFs
-        const watermarkPDF = async () => {
-            const upload = document.getElementById('upload');
-            const watermarkInput = document.getElementById('watermarkText');
-            const statusDiv = document.getElementById('status');
-            const previewsDiv = document.getElementById('previews');
+            statusDiv.innerHTML = `<strong>All files watermarked!</strong>`;
+        } catch (error) {
+            console.error(error.message);
+            statusDiv.textContent = `Error: ${error.message}`;
+        }
+    };
 
-            const files = Array.from(upload.files);
-            const watermarkText = watermarkInput.value.trim();
+    // Load the "home" section by default when the page loads
+    window.onload = () => {
+        showSection("home");
 
-            if (!files || files.length === 0) {
-                statusDiv.textContent = "Please select a PDF file to watermark.";
-                return;
-            }
+        // Set up mobile menu toggle
+        const menuToggle = document.getElementById("menu-toggle");
+        if (menuToggle) {
+            menuToggle.addEventListener("click", toggleMobileMenu);
+        }
+    };
 
-            if (!watermarkText) {
-                statusDiv.textContent = "Please enter watermark text.";
-                return;
-            }
-
-            try {
-                const { jsPDF } = window.jspdf || {};
-                if (!jsPDF) throw new Error("jsPDF not found. Check script import.");
-
-                previewsDiv.innerHTML = '';
-
-                for (const file of files) {
-                    const fileName = file.name.replace(/\.pdf$/i, '');
-                    statusDiv.innerHTML = `Processing <b>${file.name}</b>...`;
-
-                    const arrayBuffer = await file.arrayBuffer();
-                    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                    const canvases = [];
-
-                    for (let i = 1; i <= pdf.numPages; i++) {
-                        const page = await pdf.getPage(i);
-                        const viewport = page.getViewport({ scale: 2 });
-                        const canvas = document.createElement('canvas');
-                        const context = canvas.getContext('2d');
-                        canvas.width = viewport.width;
-                        canvas.height = viewport.height;
-
-                        await page.render({ canvasContext: context, viewport }).promise;
-
-                        // Add watermark text
-                        context.font = "48px sans-serif";
-                        context.fillStyle = "rgba(255, 0, 0, 0.25)";
-                        context.textAlign = "center";
-                        context.translate(canvas.width / 2, canvas.height / 2);
-                        context.rotate(-Math.PI / 4);
-                        context.fillText(watermarkText, 0, 0);
-
-                        canvases.push(canvas);
-                    }
-
-                    const pdfDoc = new jsPDF();
-
-                    canvases.forEach((canvas, index) => {
-                        const imgData = canvas.toDataURL('image/png');
-                        const imgProps = pdfDoc.getImageProperties(imgData);
-                        const pdfWidth = pdfDoc.internal.pageSize.getWidth();
-                        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-                        if (index !== 0) pdfDoc.addPage();
-                        pdfDoc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                    });
-
-                    const outputBlob = pdfDoc.output('blob');
-                    const url = URL.createObjectURL(outputBlob);
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.download = `${fileName}_watermarked.pdf`;
-                    link.textContent = `Download ${fileName}_watermarked.pdf`;
-                    link.style.display = 'block';
-                    link.style.margin = '10px auto';
-
-                    const container = document.createElement('div');
-                    container.className = 'pdf-preview';
-                    container.innerHTML = `<h3>${file.name}</h3>`;
-                    container.appendChild(link);
-                    previewsDiv.appendChild(container);
-                }
-
-                statusDiv.innerHTML = `<strong>All files watermarked!</strong>`;
-            } catch (error) {
-                console.error(error.message);
-                statusDiv.textContent = `Error: ${error.message}`;
-            }
-        };
-        
-        // Load the "home" section by default when the page loads
-        window.onload = () => {
-            showSection('home');
-            
-            // Set up mobile menu toggle
-            const menuToggle = document.getElementById('menu-toggle');
-            if (menuToggle) {
-                menuToggle.addEventListener('click', toggleMobileMenu);
-            }
-        };
-    </script>
-</body>
+</script>
 
 </html>
